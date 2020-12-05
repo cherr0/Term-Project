@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    console.log('JS 연결 완료');
     var finished = false;
 
     // 회원가입
@@ -42,7 +43,7 @@ $(document).ready(function() {
     // 로그인
     $('#login').on('click', function() {
         let data = {
-            id : $('#lodinId').val(),
+            id : $('#loginId').val(),
             password : $('#loginPW').val()
         }
 

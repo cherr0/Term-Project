@@ -31,7 +31,7 @@
             th:fragment="sidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fab fa-apple"></i>
             </div>
@@ -42,35 +42,51 @@
         <hr class="sidebar-divider my-0">
 
 
-        <li class="nav-item active" th:if="${session.user == null}">
-            <i class="fas fa-key"></i>
-            <span>로그인이 필요합니다</span>
+        <li class="nav-item" th:if="${session.user == null}">
+            <div class="nav-link">
+                <i class="fas fa-key"></i>
+                <span style="cursor:default">로그인이 필요합니다</span>
+            </div>
         </li>
-        <li class="nav-item active">
-            <i class="fas fa-check-circle"></i>
-            <div th:text="'안녕하세요 ' + ${session.user.name} + '님'"></div>
-            <p th:text="${#dates.format(session.user.regDate, 'yyyy-MM-dd HH:mm:ss')}"></p>
+        <li class="nav-item  nav-link" th:unless="${session.user == null}">
+                <i class="fas fa-check-circle"></i>
+                <div th:text="'안녕하세요 ' + ${session.user.name} + '님'"></div>
+                <p th:text="${#dates.format(session.user.regDate, 'yyyy-MM-dd HH:mm:ss')}"></p>
         </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Interface
+            User
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
+        <li class="nav-item" th:if="${session.user == null}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>Components</span>
+                <span>로그인 관련</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Components:</h6>
-                    <a class="collapse-item" href="buttons.html">Buttons</a>
-                    <a class="collapse-item" href="cards.html">Cards</a>
+                    <a class="collapse-item" data-toggle="modal" data-target="#loginBtn" href="#">로그인</a>
+                    <a class="collapse-item" data-toggle="modal" data-target="#joinBtn" href="#">회원가입</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item" th:unless="${session.user == null}">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>로그인 관련</span>
+            </a>
+            <div class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Components:</h6>
+                    <a class="collapse-item" data-toggle="modal" data-target="#logoutModal" href="#">로그아웃</a>
                 </div>
             </div>
         </li>
@@ -155,6 +171,95 @@
                 <span>Copyright &copy; Your Website 2020</span>
             </div>
         </div>
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- 로그아웃 Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 로그인 Model -->
+        <div class="modal fade" id="loginBtn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">로그인</h5>
+                    </div>
+                    <div class="modal-body">
+                        아이디 <input type="text" id="loginId" placeholder="아이디를 입력해주세요."  class="form-control">
+                        <br>
+                        비밀번호 <input type="password" id="loginPW" placeholder="비밀번호를 입력해주세요" class="form-control">
+                        <br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="login">로그인</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 회원가입 Modal -->
+        <div class="modal fade" id="joinBtn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">회원가입</h5>
+                        <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        아이디 <input type="text" id="joinId" placeholder="아이디를 입력해주세요."  class="form-control">
+                        비밀번호 <input type="password" id="joinPW" placeholder="비밀번호를 입력해주세요" class="form-control">
+                        이름 <input type="text" id="name" placeholder="이름을 입력해주세요" class="form-control">
+                        <br>
+                        이메일
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-9">
+                                    <input type="text" placeholder="이메일을 입력해주세요" class="form-control" id="email">
+                                </div>
+                                <div class="col-3" style="text-align: right">
+                                    <button class="btn btn-primary active btn-sm" id="sendEmail">전송</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-9">
+                                    <input type="text" placeholder="인증번호 8자리를 입력해주세요." class="form-control" id="confirmCode">
+                                </div>
+                                <div class="col-3" style="text-align: right">
+                                    <button class="btn btn-success btn-sm" id="confirm">인증</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" id="join">회원가입</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
     <!-- End of Footer -->
 </div>
@@ -165,42 +270,28 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
+<div th:fragment="JS">
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="assets/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="assets/js/demo/chart-area-demo.js"></script>
+    <script src="assets/js/demo/chart-pie-demo.js"></script>
+
+    <!-- 직접 작성한 JS -->
+    <script src="assets/js/index.js"></script>
 </div>
-
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="assets/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="assets/js/demo/chart-area-demo.js"></script>
-<script src="assets/js/demo/chart-pie-demo.js"></script>
 
 </body>
 
