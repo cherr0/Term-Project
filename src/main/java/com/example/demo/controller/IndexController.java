@@ -17,6 +17,11 @@ public class IndexController {
 
 
     @GetMapping("/")
+    public String loginForm(){
+        return "loginForm";
+    }
+
+    @GetMapping("/index")
     public String index(){
         return "index";
     }

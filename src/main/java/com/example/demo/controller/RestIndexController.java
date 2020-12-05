@@ -5,8 +5,11 @@ import com.example.demo.domain.Member;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,13 +29,31 @@ public class RestIndexController {
         memberService.join(member);
     }
 
-    // 로그인
-    @PostMapping("rest/login")
-    public Member login(Member member, HttpSession httpSession){
-        System.out.println("restController login(): " + member.toString());
-        System.out.println("restController login() return : " + memberService.login(member));
-        httpSession.setAttribute("user", memberService.login(member));  // 세션에 유저 등록
-        return memberService.login(member);
+    //로그인 처리
+    @PostMapping("/rest/login")
+    public int loginCheck(Member member, HttpSession httpSession) {
+        System.out.println("loginCheck()");
+        var verify = 0;
+        if(memberService.login(member)){
+            httpSession.setAttribute("user", member);
+            verify = 1;
+        }
+        System.out.println(verify);
+        return verify;
+
+
+    }
+
+    //로그아웃 처리
+    @RequestMapping("logout")
+    public ModelAndView logout(HttpSession session) {
+
+        memberService.logout(session);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("login");
+        mav.addObject("msg", "logout");
+
+        return mav;
     }
 
     // 메일 전송

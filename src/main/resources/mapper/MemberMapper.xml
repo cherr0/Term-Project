@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.MemberMapper">
     <insert id="join">
-        insert into member values(
-        member_seq.nextval,
+        insert into member(mno,id,password,name,type,regdate) values(
+        member_mno_seq.nextval,
         #{id},
         #{password},
         #{name},
@@ -13,10 +13,12 @@
         )
     </insert>
 
-    <select id="login" resultType="com.example.demo.domain.Member">
-        select * from member
+    <select id="login" resultType="int">
+
+        select count(*) from member
         where id = #{id}
         and password = #{password}
+
     </select>
 
     <select id="memberList" resultType="com.example.demo.domain.Member">
