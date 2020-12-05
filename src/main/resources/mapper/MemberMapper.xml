@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- namespace 꼭 수정할 것 -->
-
-<!-- sql문을 맵핑해서 사용하는 곳 -->
 <mapper namespace="com.example.demo.mapper.MemberMapper">
     <insert id="join">
-        insert into member(id, password, name, type, regdate)
-        values(#{id},#{password},#{name},'일반',sysdate())
+        insert into member values(
+        member_seq.nextval,
+        #{id},
+        #{password},
+        #{name},
+        '일반',
+        sysdate
+        )
     </insert>
 
     <select id="login" resultType="com.example.demo.domain.Member">
@@ -19,4 +22,6 @@
     <select id="memberList" resultType="com.example.demo.domain.Member">
         select * from member
     </select>
+
+
 </mapper>

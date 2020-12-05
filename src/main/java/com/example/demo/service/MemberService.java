@@ -20,7 +20,8 @@ public class MemberService {
 
     // 로그인
     public Member login(Member member){
-        System.out.println("service login()" + memberMapper.login(member));
+        System.out.println("service login() :" + member.toString());
+        System.out.println("service login() : " + memberMapper.login(member));
         return memberMapper.login(member);
     }
 
