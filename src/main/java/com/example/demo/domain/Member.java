@@ -6,10 +6,10 @@ import java.util.Date;
 
 @Data
 public class Member {
-    private long mno;
-    private String id;
-    private String password;
-    private String name;
-    private String type;
-    private Date regDate;
+    private long mno;           // 자동 시퀀스 생성
+    private String id;          // 회원 아이디
+    private String password;    // 회원 패스워드
+    private String name;        // 회원 이름
+    private String type;        // 회원 등급
+    private Date regDate;       // 회원가입 날짜
 }
