@@ -9,7 +9,7 @@ public class Criteria {
     private int perPageNum; // 선택한 페이지에 보여줄 갯수
     private int rowStart; // DB에 검색할 start rownum
     private int rowEnd; // DB에 검색할 end rownum
-    private long bno; // 게시글 번호
+    private int bno; // 게시글 번호
 
     public Criteria() {
         this.page = 1;

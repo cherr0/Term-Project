@@ -12,7 +12,7 @@ public class Board {
     private String content; // 내용
     private String writer;  // 작성자
     private Date regDate;   // 작성일
-    private long mno;       // 작성자 번호
+    private int mno;       // 작성자 번호
     private int count;      // 조회수
     private int reco;       // 추천수
 }

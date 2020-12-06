@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class Reply {
-    private long rno;
+    private int rno;
     private String rcontent;
     private String rwriter;
     private Date regDate;
