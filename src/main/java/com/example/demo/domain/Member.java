@@ -12,4 +12,5 @@ public class Member {
     private String name;        // 회원 이름
     private String type;        // 회원 등급
     private Date regDate;       // 회원가입 날짜
+    private String email;
 }
