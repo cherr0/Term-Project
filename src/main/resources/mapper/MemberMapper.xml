@@ -15,9 +15,9 @@
 
     <select id="login" resultType="int">
 
-        select count(*) from member
+        select count(*) from springboot_webservice.member
         where id = #{id}
-        and password = #{password}
+        and password = #{password};
 
     </select>
 
