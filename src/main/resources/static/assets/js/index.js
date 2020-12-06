@@ -7,9 +7,15 @@ $(document).ready(function() {
         let data = {
             id : $('#joinId').val(),
             password : $('#joinPW').val(),
-            name : $('#name').val()
+            name : $('#name').val(),
+            email : $('#joinEmail').val(),
+            rePw : $('#repeatJoinPw').val()
         }
 
+        if(data.rePw === data.password){
+            alert('비밀번호 확인 값이 일치하지 않습니다.');
+            return;
+        }
 
         if(finished === true) {
             $.ajax({
@@ -58,7 +64,12 @@ $(document).ready(function() {
     // 메일 전송
     $('#sendEmail').on('click', function() {
         let data = {
-            userEmail : $('#email').val()
+            userEmail : $('#joinEmail').val()
+        }
+
+        if(data.userEmail === ''){
+            alert('이메일을 입력해주세요');
+            return;
         }
 
         $.ajax({

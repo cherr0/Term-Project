@@ -47,6 +47,7 @@ public class EmailService {
 
         return message;
     }
+
     //		인증코드 만들기
     public static String createKey() {
         StringBuffer key = new StringBuffer();
@@ -78,7 +79,7 @@ public class EmailService {
     public void sendSimpleMessage(String to)throws Exception {
         // TODO Auto-generated method stub
         MimeMessage message = createMessage(to);
-        try{//예외처리
+        try{    //예외처리
             emailSender.send(message);
         }catch(MailException es){
             es.printStackTrace();

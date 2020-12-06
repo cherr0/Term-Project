@@ -5,10 +5,6 @@ import com.example.demo.domain.Member;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -23,9 +19,10 @@ public class RestIndexController {
 
     // 회원가입
     @PostMapping("/rest/join")
-    public void join(Member member){
+    public void join(Member member, HttpSession httpSession){
         System.out.println("restController join(): " + member.toString());
 
+        httpSession.setAttribute("user", member);
         memberService.join(member);
     }
 
