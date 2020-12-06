@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/layout :: head">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul th:replace="layout/layout :: sidebar"></ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div>
+                <nav th:replace="layout/layout :: nav"></nav>
+
+                <table class="container">
+                    <thead class="thead-light">
+                    <tr>
+                        <th><h1>회원번호</h1></th>
+                        <th><h1>아이디</h1></th>
+                        <th><h1>이름</h1></th>
+                        <th><h1>이메일</h1></th>
+                        <th><h1>타입</h1></th>
+                        <th><h1>생성일</h1></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="memberList : ${memberList}">
+                        <td><span th:text="${memberList.mno}"></span></td>
+                        <td><span th:text="${memberList.id}"></span></td>
+                        <td><span th:text="${memberList.name}"></span></td>
+                        <td><span th:text="${memberList.email}"></span></td>
+                        <td><span th:text="${memberList.type}"></span></td>
+                        <td><span th:text="${memberList.regDate}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white" th:replace="layout/layout :: footer"></footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+
+
+    <div th:replace="layout/layout :: JS">
+        <!-- Page level custom scripts -->
+        <script src="../static/assets/js/demo/datatables-demo.js"></script>
+    </div>
+</body>
+
+</html>

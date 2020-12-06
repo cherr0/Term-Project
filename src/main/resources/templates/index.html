@@ -20,6 +20,61 @@
             <div>
                 <nav th:replace="layout/layout :: nav"></nav>
 
+                <table class="container">
+                    <thead class="thead-light">
+                    <tr>
+                        <th><h1>글번호</h1></th>
+                        <th><h1>제목</h1></th>
+                        <th><h1>작성자</h1></th>
+                        <th><h1>작성일</h1></th>
+                        <th><h1>조회수</h1></th>
+                        <th><h1>추천수</h1></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="boardList : ${boardList}">
+                        <td><span th:text="${boardList.bno}"></span></td>
+                        <td><a th:href="@{'/select/'+${boardList.bno}}"><span th:text="${boardList.title}"></span></a></td>
+                        <td><span th:text="${boardList.writer}"></span></td>
+                        <td><span th:text="${#dates.format(boardList.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
+                        <td><span th:text="${boardList.count}"></span></td>
+                        <td><span th:text="${boardList.reco}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- paging button-->
+            <div style="display: inline-block">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/index?page=1}" aria-label="Previous">
+                            <span aria-hidden="true">처음</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/index?page={page} (page = ${pagination.prevBlock})}" aria-label="Previous">
+                            <span aria-hidden="true">이전</span>
+                        </a>
+                    </li>
+                    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+                        <li class="page-item"
+                            th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+                            th:each="pageButton : ${#numbers.sequence(start, end)}">
+                            <a class="page-link" th:href="@{/index?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+                        </li>
+                    <th:block>
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{?page={page} (page = ${pagination.nextBlock})}" aria-label="Next">
+                            <span aria-hidden="true">다음</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{?page={page} (page = ${pagination.totalPageCnt})}" aria-label="Previous">
+                            <span aria-hidden="true">끝</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
 
             <!-- Footer -->
@@ -33,7 +88,10 @@
 
 
 
-    <div th:replace="layout/layout :: JS"></div>
+    <div th:replace="layout/layout :: JS">
+        <!-- Page level custom scripts -->
+        <script src="../static/assets/js/demo/datatables-demo.js"></script>
+    </div>
 </body>
 
 </html>

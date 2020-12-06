@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/layout :: head">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul th:replace="layout/layout :: sidebar"></ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div>
+                <nav th:replace="layout/layout :: nav"></nav>
+                <section class="two">
+                    <div class="container">
+                        <h1>게시글 열람</h1>
+                        <br><br>
+                        <div style="float: right;">
+                            조회수&emsp;<span th:text="${select.count}"></span>&emsp;&emsp;&emsp;
+                            추천수&emsp;<span th:text="${select.reco}"></span>&emsp;&emsp;&emsp;
+                            작성일&emsp;<span th:text="${#dates.format(select.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span>&emsp;&emsp;&emsp;
+                            <button id="reco" class="btn btn-warning">추천</button>
+                            <input type="hidden" th:value="${select.bno}" id="bno">
+                        </div>
+                        <br><br><br>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <span style="font-size: 30px">제목</span>
+                            </div>
+                            <div class="col-10">
+                                <span style="font-size: 30px; float: left;" th:text="${select.title}"></span>
+                            </div>
+                        </div>
+                        <br><br><br>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <span style="font-size: 30px">내용</span>
+                            </div>
+                            <div class="col-5" style="word-break:break-all;">
+                                <span style="font-size: 30px; float: left;" th:text="${select.content}"></span>
+                            </div>
+                        </div>
+
+                        <br><br><br>
+                        <div class="row">
+                            <div class="col-2">
+                                <span style="font-size: 30px">작성자</span>
+                            </div>
+                            <div class="col-10">
+                                <span style="font-size: 30px; float: left;" th:text="${select.writer}"></span>
+                            </div>
+                        </div>
+                        <br><br><br>
+                        <button id="back" class="btn btn-danger" style="float: right">뒤로</button>
+                        <button id="delete" class="btn btn-secondary" style="float: right">삭제</button>
+                        <button id="updateBtn" class="btn btn-primary" style="float: right">수정</button>
+                        <br><br><br>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="댓글을 작성해주세요." id="rcontent">
+                            <div class="input-group-append">
+                                <button class="btn btn-info" id="reply">댓글달기</button>
+                            </div>
+                        </div>
+                        <br>
+                        <input type="hidden" th:value="${session.user.name}" id="rwriter" />
+                        <ul class="list-group">
+                            <li class="d-flex justify-content-between" th:each="reply : ${reply}">
+                                <div>
+                                    <span th:text="${reply.rwriter}"></span><br>
+                                    <span class="badge badge-primary badge-pill" th:text="${reply.up}"></span>
+                                    <span class="badge badge-danger badge-pill" th:text="${reply.down}"></span>
+                                    <input type="hidden" th:value="${reply.rno}" id="rno" />
+                                </div><br>
+
+                                <div th:text="${reply.rcontent}" style="float: left"></div>
+
+                                <br><br>
+                                <div style="float: right">
+                                    <span th:text="${#dates.format(reply.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span><br>
+                                    <a href="#" th:onclick="'javascript:up('+ ${reply.up} + ')'"><span class="badge badge-primary badge-pill">추천</span></a>
+                                    <a href="#" th:onclick="'javascript:down(' + ${reply.down} + ')'"><span class="badge badge-danger badge-pill">비추</span></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- paging button-->
+                    <div aria-label="Page navigation example " style="display: inline-block">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{?page=1}" aria-label="Previous">
+                                    <span aria-hidden="true">처음</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{?page={page} (page = ${pagination.prevBlock})}" aria-label="Previous">
+                                    <span aria-hidden="true">이전</span>
+                                </a>
+                            </li>
+                            <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+                                <li class="page-item"
+                                    th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+                                    th:each="pageButton : ${#numbers.sequence(start, end)}">
+                                    <a class="page-link" th:href="@{?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+                                </li>
+                            </th:block>
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{?page={page} (page = ${pagination.nextBlock})}" aria-label="Next">
+                                    <span aria-hidden="true">다음</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{?page={page} (page = ${pagination.totalPageCnt})}" aria-label="Previous">
+                                    <span aria-hidden="true">끝</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <input type="hidden" th:value="${session.user.mno}" id="mno">
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white" th:replace="layout/layout :: footer"></footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+
+
+    <div th:replace="layout/layout :: JS"></div>
+</body>
+
+</html>
