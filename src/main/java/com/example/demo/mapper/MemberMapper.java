@@ -1,7 +1,6 @@
 package com.example.demo.mapper;
 
 import com.example.demo.domain.Member;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
