@@ -15,23 +15,26 @@ public class MemberService {
     @Autowired(required = false)
     MemberMapper memberMapper;
 
-    @Autowired
-    SqlSession sqlSession;
-
     // 회원가입
     public void join(Member member){
         System.out.println("service join(): " + member.toString());
         memberMapper.join(member);
     }
 
-    // 로그인
-    public Boolean login(Member member){
-        int name = memberMapper.login(member);
+    // 로그인 체크
+    public Boolean loginChk(Member member){
+        int name = memberMapper.loginChk(member);
         System.out.println(name);
         System.out.println("service login() :" + member.toString());
 
         // 검색이 안되면 0을 반환해주기 때문에 0과 비교해서 참이면 false, 틀리면 true를 반환
         return name != 0;
+    }
+
+    public Member login(Member member) {
+        System.out.println("service login(): " + member.toString());
+        System.out.println("service login(): " + memberMapper.login(member));
+        return memberMapper.login(member);
     }
 
     // 로그아웃

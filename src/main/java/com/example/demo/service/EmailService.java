@@ -16,7 +16,7 @@ public class EmailService {
     JavaMailSender emailSender;
     // pom.xml 에서 설정한 디펜던시
 
-    public final String ePw = createKey();
+    public String ePw = createKey();
     public static final int CONFIRM = 1;
     public static final int REJECT = 0;
 
