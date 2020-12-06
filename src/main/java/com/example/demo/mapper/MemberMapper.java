@@ -8,7 +8,9 @@ import java.util.ArrayList;
 public interface MemberMapper {
     void join(Member member);   // 회원가입
 
-    int login(Member member);    // 로그인
+    int loginChk(Member member);    // 로그인 확인
+
+    Member login(Member member);    // 로그인
 
     void logout(HttpSession session);   // 로그아웃
 
