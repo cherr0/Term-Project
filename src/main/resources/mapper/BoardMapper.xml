@@ -4,7 +4,7 @@
 <mapper namespace="com.example.demo.mapper.BoardMapper">
 
     <insert id="write">
-        insert into springboot_webservice.board(board_idx,title,content,writer,mno)
+        insert into board(board_idx,title,content,writer,mno)
         values(1,#{title}, #{content}, #{writer}, #{mno})
     </insert>
 
@@ -12,43 +12,47 @@
         select *
         from (select row_number() over(order by bno desc) AS ronum, bno, title, content, writer,
                      regDate, count, reco
-              from springboot_webservice.board) as b
+              from board) as b
         where ronum between #{rowStart} and #{rowEnd}
         order by bno desc
     </select>
 
     <select id="select" resultType="com.example.demo.domain.Board">
         select *
-        from springboot_webservice.board
+        from board
         where bno = #{bno}
     </select>
 
     <update id="count">
-        update springboot_webservice.board
+        update board
         set count = count + 1
         where bno = #{bno}
     </update>
 
     <update id="reco">
-        update springboot_webservice.board
+        update board
         set reco = reco + 1
         where bno = #{bno}
     </update>
 
     <delete id="delete">
-        delete from springboot_webservice.board
-        where bno = #{bno}
+        delete b, r
+        from board as b
+        inner join reply as r
+        on b.bno = r.bno
+        where b.bno= #{bno}
+        and r.bno = b.bno;
     </delete>
 
     <update id="update">
-        update springboot_webservice.board
+        update board
         set title=#{title}, content=#{content}, writer=#{writer}
         where bno = #{bno}
     </update>
 
 
     <insert id="reply">
-        insert into springboot_webservice.reply(rcontent,rwriter,up,down,bno,mno)
+        insert into reply(rcontent,rwriter,up,down,bno,mno)
         values (#{rcontent}, #{rwriter}, 0, 0, #{bno}, #{mno}
         )
     </insert>
@@ -57,32 +61,32 @@
         select *
         from (select row_number() over () AS ronum, rno, rcontent, rwriter, regDate,
                      up, down, bno, mno
-              from springboot_webservice.reply) as b
+              from reply) as b
         where ronum between #{rowStart} and #{rowEnd}
         and bno = #{bno}
         order by bno desc
     </select>
 
     <update id="up">
-        update springboot_webservice.reply
+        update reply
         set up = up + 1
         where bno = #{bno} and rno = #{rno}
     </update>
 
     <update id="down">
-        update springboot_webservice.reply
+        update reply
         set down = down + 1
         where bno = #{bno} and rno = #{rno}
     </update>
 
     <select id="boardListCnt" resultType="int">
         select count(*)
-        from springboot_webservice.board
+        from board
     </select>
 
     <select id="replyListCnt" resultType="int">
         select count(*)
-        from springboot_webservice.reply
+        from reply
         where bno = #{bno}
     </select>
 
