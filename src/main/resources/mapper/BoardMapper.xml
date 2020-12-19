@@ -37,8 +37,8 @@
 
     <delete id="delete">
         delete b, r
-        from board as b
-        inner join reply as r
+        from board b
+        inner join reply r
         on b.bno = r.bno
         where b.bno= #{bno}
         and r.bno = b.bno;
